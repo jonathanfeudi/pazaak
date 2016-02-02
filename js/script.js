@@ -38,9 +38,29 @@ function makeSideDeck(){
 };
 
 function dealHands(){
-  
+  for (var j = 0; j < 2; j++){
+    for (var i = 0; i < 4; i++){
+      var x = randomInt(0,10);
+      hands[j].push(sideDecks[j][x]);
+    }
+  }
 };
 
+var game = {
+  start: function(){
+    makeMainDeck();
+    makeSideDeck();
+    dealHands();
+    var x = randomInt(0, 2);
+    whosTurn = x;
+  }
+  whosTurn: ;
+  // flop: function(){
+  //   if
+  // }
+};
+
+var inPlay = [[],[]]
 var hands = [[],[]];
 var sideDecks = [[],[]];
 var mainDeck = [];

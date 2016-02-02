@@ -7,6 +7,11 @@ function Card(){
   //side or main
 };
 
+function addScores(x, y){
+  return x + y;
+}
+//http://stackoverflow.com/questions/1230233/how-to-find-the-sum-of-an-array-of-numbers
+
 function randomInt(min, max){
   return Math.floor(Math.random() * (max - min)) + min;
 };
@@ -25,7 +30,6 @@ function makeMainDeck(){
 
 function makeSideDeck(){
   for (var j = 0; j < 2; j++){
-    console.log(j);
     for (var i = 0; i < 10; i++){
       var cardValueRandom = randomInt(1, 7);
       var newCard = new Card();
@@ -46,18 +50,46 @@ function dealHands(){
   }
 };
 
+var player = {
+  playCard: function(card){
+    var x = game.whosTurn;
+    inPlay[x].push(hands[x][card]);
+    hands[x].splice(card, 1);
+  },
+  endTurn: function(){
+    if (game.whosTurn === 0){
+      game.whosTurn = 1;
+    } else {
+      game.whosTurn = 0;
+    }
+  },
+  cardScore: function(){
+    var x = game.whosTurn;
+    for (var i = 0; i < inPlay[x].length; i++){
+      player.cardArray[x].push(inPlay[x][i].val);
+    }
+    var total = player.cardArray[x].reduce(addScores, 0);
+    player.scoreArray[x].push(total);
+  },
+  cardArray: [[],[]],
+  scoreArray: [[],[]],
+};
+
 var game = {
+  whosTurn: null,
   start: function(){
     makeMainDeck();
     makeSideDeck();
     dealHands();
     var x = randomInt(0, 2);
-    whosTurn = x;
+    game.whosTurn = x;
+  },
+  flop: function(){
+    var w = game.whosTurn;
+    var y = randomInt(0,40);
+    inPlay[w].push(mainDeck[y]);
+    mainDeck.splice(y, 1);
   }
-  whosTurn: ;
-  // flop: function(){
-  //   if
-  // }
 };
 
 var inPlay = [[],[]]

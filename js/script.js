@@ -87,8 +87,16 @@ var player = {
   stand: function(){
     var x = game.whosTurn;
     player.standing[x][0] = true;
-    player.cardScore();
-    player.endTurn();
+    if (game.whosTurn === 0){
+      game.whosTurn = 1;
+    } else {
+      game.whosTurn = 0;
+    }
+    if ((player.standing[0][0] === true) && (player.standing[1][0] === true)){
+      game.checkWin();
+      return;
+    }
+    player.startTurn();
   },
   playCard: function(card){
     var x = game.whosTurn;

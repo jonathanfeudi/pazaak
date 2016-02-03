@@ -93,7 +93,7 @@ var game = {
   checkWin: function(){
     if (((player.scoreArray[0][0] > player.scoreArray[1][0]) && !(player.scoreArray[0][0] > 20)) || (!(player.scoreArray[0][0] > 20) && (player.scoreArray[1][0] > 20))){
       console.log('Player 1 Wins');
-    } else if (((player.scoreArray[1][0] > player.scoreArray[0][0]) && !(player.scoreArray[1][0])) || (!(player.scoreArray[1][0] > 20) && (player.scoreArray[0][0] > 20))){
+    } else if (((player.scoreArray[1][0] > player.scoreArray[0][0]) && !(player.scoreArray[1][0] > 20)) || (!(player.scoreArray[1][0] > 20) && (player.scoreArray[0][0] > 20))){
       console.log('Player 2 Wins');
     }
   },

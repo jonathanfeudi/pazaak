@@ -32,9 +32,15 @@ function makeSideDeck(){
   for (var j = 0; j < 2; j++){
     for (var i = 0; i < 10; i++){
       var cardValueRandom = randomInt(1, 7);
+      var oneOfTwo = randomInt(0, 2);
       var newCard = new Card();
       newCard.val = cardValueRandom;
-      newCard.operation = '+';
+      if (oneOfTwo === 0){
+        newCard.operation = '+';
+      } else {
+        newCard.operation = '-';
+        newCard.val *= -1;
+      }
       newCard.deck = 'side';
       sideDecks[j].push(newCard);
     }
@@ -44,8 +50,10 @@ function makeSideDeck(){
 function dealHands(){
   for (var j = 0; j < 2; j++){
     for (var i = 0; i < 4; i++){
-      var x = randomInt(0,10);
+      var y = sideDecks[j].length;
+      var x = randomInt(0,y);
       hands[j].push(sideDecks[j][x]);
+      sideDecks[j].splice(x, 1);
     }
   }
 };

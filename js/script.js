@@ -192,7 +192,7 @@ var game = {
     game.gameOver();
   },
   gameOver: function(){
-    if ((game.wins[0][0] = 3) || (game.wins[1][0] = 3)){
+    if ((game.wins[0][0] == 3) || (game.wins[1][0] == 3)){
       console.log('Game over.')
       return;
     }

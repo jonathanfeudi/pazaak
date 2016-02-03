@@ -59,6 +59,15 @@ function dealHands(){
 };
 
 var player = {
+  standing: [[false],[false]],
+  stand: function(){
+    var x = game.whosTurn;
+    if (player.standing[x][0] === true){
+      return;
+    } else {
+      player.standing[x][0] = true;
+    }
+  },
   playCard: function(card){
     var x = game.whosTurn;
     inPlay[x].push(hands[x][card]);
@@ -73,6 +82,13 @@ var player = {
   },
   cardScore: function(){
     var x = game.whosTurn;
+    var cardCount = player.cardArray[x].length;
+    if (cardCount > 0){
+      player.cardArray[x].splice(0, cardCount);
+    }
+    if (!(player.scoreArray[x][0] === undefined)){
+      player.scoreArray[x].splice(0, 1);
+    }
     for (var i = 0; i < inPlay[x].length; i++){
       player.cardArray[x].push(inPlay[x][i].val);
     }

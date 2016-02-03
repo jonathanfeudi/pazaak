@@ -62,23 +62,36 @@ var player = {
   standing: [[false],[false]],
   stand: function(){
     var x = game.whosTurn;
-    if (player.standing[x][0] === true){
-      return;
-    } else {
-      player.standing[x][0] = true;
-    }
+    player.standing[x][0] = true;
+    player.cardScore();
+    player.endTurn();
   },
   playCard: function(card){
     var x = game.whosTurn;
     inPlay[x].push(hands[x][card]);
     hands[x].splice(card, 1);
+    player.cardScore();
+  },
+  startTurn: function(){
+    var x = game.whosTurn;
+    if ((player.standing[0][0] === true) && (player.standing[1][0])){
+      game.checkWin();
+      return;
+    }
+    if (player.standing[x][0] === false){
+      game.flop();
+    } else {
+      player.endTurn();
+    }
   },
   endTurn: function(){
+    var x = game.whosTurn;
     if (game.whosTurn === 0){
       game.whosTurn = 1;
     } else {
       game.whosTurn = 0;
     }
+    player.startTurn();
   },
   cardScore: function(){
     var x = game.whosTurn;
@@ -86,7 +99,7 @@ var player = {
     if (cardCount > 0){
       player.cardArray[x].splice(0, cardCount);
     }
-    if (!(player.scoreArray[x][0] === undefined)){
+    if (player.scoreArray[x].length > 0){
       player.scoreArray[x].splice(0, 1);
     }
     for (var i = 0; i < inPlay[x].length; i++){
@@ -101,24 +114,30 @@ var player = {
 
 var game = {
   whosTurn: null,
+  wins: [[0],[0]],
   start: function(){
     makeMainDeck();
     makeSideDeck();
     dealHands();
     var x = randomInt(0, 2);
     game.whosTurn = x;
+    game.flop();
   },
   flop: function(){
     var w = game.whosTurn;
-    var y = randomInt(0,40);
+    var dl = mainDeck.length;
+    var y = randomInt(0,dl);
     inPlay[w].push(mainDeck[y]);
     mainDeck.splice(y, 1);
+    player.cardScore();
   },
   checkWin: function(){
     if (((player.scoreArray[0][0] > player.scoreArray[1][0]) && !(player.scoreArray[0][0] > 20)) || (!(player.scoreArray[0][0] > 20) && (player.scoreArray[1][0] > 20))){
       console.log('Player 1 Wins');
+      game.wins[0][0] += 1;
     } else if (((player.scoreArray[1][0] > player.scoreArray[0][0]) && !(player.scoreArray[1][0] > 20)) || (!(player.scoreArray[1][0] > 20) && (player.scoreArray[0][0] > 20))){
       console.log('Player 2 Wins');
+      game.wins[1][0] += 1;
     }
   },
 };

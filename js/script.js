@@ -112,6 +112,11 @@ var player = {
     var x = game.whosTurn;
     if (player.scoreArray[x][0] > 20){
       game.checkWin();
+      return;
+    }
+    if (player.scoreArray[x][0] == 20){
+      player.stand();
+      return;
     }
     if (game.whosTurn === 0){
       game.whosTurn = 1;

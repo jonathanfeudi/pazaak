@@ -110,6 +110,9 @@ var player = {
   },
   endTurn: function(){
     var x = game.whosTurn;
+    if (player.scoreArray[x][0] > 20){
+      game.checkWin();
+    }
     if (game.whosTurn === 0){
       game.whosTurn = 1;
     } else {
@@ -184,6 +187,18 @@ var game = {
     clearMainDeck();
     clearSideDecks();
     clearHands();
+    player.standing[0][0] = false;
+    player.standing[1][0] = false;
+    game.gameOver();
+  },
+  gameOver: function(){
+    if ((game.wins[0][0] = 3) || (game.wins[1][0] = 3)){
+      console.log('Game over.')
+      return;
+    }
+    if ((game.wins[0][0] < 3) && (game.wins[1][0] < 3)){
+      game.start();
+    }
   },
 };
 

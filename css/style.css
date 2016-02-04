@@ -24,6 +24,6 @@ table{
   color: #2bdef2;
 }
 
-.container{
-  display: inline-block;
+#playArea{
+  align-content: center;
 }

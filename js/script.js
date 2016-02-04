@@ -65,12 +65,22 @@ function clearSideDecks(){
 
 function dealHands(){
   for (var j = 0; j < 2; j++){
-    for (var i = 0; i < 4; i++){
+    for (var i = 1; i < 5; i++){
       var y = sideDecks[j].length;
       var x = randomInt(0,y);
       hands[j].push(sideDecks[j][x]);
       sideDecks[j].splice(x, 1);
     }
+  }
+  displayHands();
+};
+
+function displayHands(){
+  var j = 1;
+  for (var i = 0; i < 4; i++){
+    $("#p1hand" + j).text(hands[0][i].operation + hands[0][i].val);
+    $("#p2hand" + j).text(hands[1][i].operation + hands[1][i].val);
+    j++;
   }
 };
 
@@ -142,6 +152,7 @@ var player = {
   },
   cardScore: function(){
     var x = game.whosTurn;
+    var playerId = game.whosTurn + 1;
     var cardCount = player.cardArray[x].length;
     if (cardCount > 0){
       player.cardArray[x].splice(0, cardCount);
@@ -154,6 +165,7 @@ var player = {
     }
     var total = player.cardArray[x].reduce(addScores, 0);
     player.scoreArray[x].push(total);
+    $("#p" + playerId + "cS").text(player.scoreArray[x][0]);
   },
   cardArray: [[],[]],
   scoreArray: [[0],[0]],
@@ -163,11 +175,11 @@ var game = {
   whosTurn: null,
   wins: [[0],[0]],
   start: function(){
+    var x = randomInt(0, 2);
+    game.whosTurn = x;
     makeMainDeck();
     makeSideDeck();
     dealHands();
-    var x = randomInt(0, 2);
-    game.whosTurn = x;
     game.flop();
   },
   flop: function(){

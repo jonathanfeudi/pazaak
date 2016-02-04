@@ -24,6 +24,14 @@ table{
   color: #2bdef2;
 }
 
-#playArea{
-  align-content: center;
+.played{
+  color: red;
+}
+
+#p1hand{
+  cursor: pointer;
+}
+
+#p2hand{
+  cursor: pointer;
 }

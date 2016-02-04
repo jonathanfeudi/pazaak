@@ -93,6 +93,37 @@ function clearHands(){
   }
 }
 
+function clearHTML(){
+  $("#p1cS").text("");
+  $("#p1card1").text("");
+  $("#p1card2").text("");
+  $("#p1card3").text("");
+  $("#p1card4").text("");
+  $("#p1card5").text("");
+  $("#p1card6").text("");
+  $("#p1card7").text("");
+  $("#p1card8").text("");
+  $("#p1card9").text("");
+  $("#p2cS").text("");
+  $("#p2card1").text("");
+  $("#p2card2").text("");
+  $("#p2card3").text("");
+  $("#p2card4").text("");
+  $("#p2card5").text("");
+  $("#p2card6").text("");
+  $("#p2card7").text("");
+  $("#p2card8").text("");
+  $("#p2card9").text("");
+  $("#p1hand1").text("");
+  $("#p1hand2").text("");
+  $("#p1hand3").text("");
+  $("#p1hand4").text("");
+  $("#p2hand1").text("");
+  $("#p2hand2").text("");
+  $("#p2hand3").text("");
+  $("#p2hand4").text("");
+}
+
 var player = {
   onCell: [0,0],
   standing: [[false],[false]],
@@ -182,6 +213,14 @@ var game = {
     dealHands();
     game.flop();
   },
+  roundStart: function(){
+    clearHTML();
+    player.onCell = [0,0];
+    var x = randomInt(0, 2);
+    game.whosTurn = x;
+    makeMainDeck();
+    game.flop();
+  },
   flop: function(){
     var w = game.whosTurn;
     var dl = mainDeck.length;
@@ -200,10 +239,12 @@ var game = {
     if (((player.scoreArray[0][0] > player.scoreArray[1][0]) && !(player.scoreArray[0][0] > 20)) || (!(player.scoreArray[0][0] > 20) && (player.scoreArray[1][0] > 20))){
       console.log('Player 1 Wins');
       game.wins[0][0] += 1;
+      $("#p1rS").text(game.wins[0][0]);
       game.clearRound();
     } else if (((player.scoreArray[1][0] > player.scoreArray[0][0]) && !(player.scoreArray[1][0] > 20)) || (!(player.scoreArray[1][0] > 20) && (player.scoreArray[0][0] > 20))){
       console.log('Player 2 Wins');
       game.wins[1][0] += 1;
+      $("#p1rS").text(game.wins[1][0]);
       game.clearRound();
     }
   },
@@ -234,7 +275,7 @@ var game = {
       return;
     }
     if ((game.wins[0][0] < 3) && (game.wins[1][0] < 3)){
-      game.start();
+      game.roundStart();
     }
   },
 };

@@ -116,6 +116,26 @@ function clearHTML(){
   $("#p2card9").text("");
 }
 
+function playCard(event){
+  var cardNo = this.getAttribute("value");
+  var currentClass = this.getAttribute("class");
+  player.playCard(cardNo);
+  this.setAttribute("class", currentClass + " played");
+  $(".played").off('click');
+}
+
+function eventListeners(){
+  if (game.whosTurn == 0){
+    $(".hand.p1").on('click', playCard);
+    $(".hand.p2").off('click');
+  }
+  if (game.whosTurn == 1){
+    $(".hand.p2").on('click', playCard);
+    $(".hand.p1").off('click');
+  }
+  $(".played").off('click');
+};
+
 var player = {
   onCell: [0,0],
   standing: [[false],[false]],
@@ -141,7 +161,7 @@ var player = {
     var lastInPlay = inPlay[x].length - 1;
     player.onCell[x]++;
     $("#p" + playerId + "card" + player.onCell[game.whosTurn]).text(inPlay[game.whosTurn][lastInPlay].operation + inPlay[game.whosTurn][lastInPlay].val);
-    hands[x].splice(card, 1);
+    // hands[x].splice(card, 1);
     player.cardScore();
   },
   startTurn: function(){
@@ -225,6 +245,7 @@ var game = {
     var lastInPlay = inPlay[w].length - 1;
     $("#p" + playerId + "card" + player.onCell[game.whosTurn]).text(inPlay[game.whosTurn][lastInPlay].operation + inPlay[game.whosTurn][lastInPlay].val);
     mainDeck.splice(y, 1);
+    eventListeners();
     player.cardScore();
   },
   checkWin: function(){

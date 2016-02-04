@@ -102,9 +102,13 @@ var player = {
   },
   playCard: function(card){
     var x = game.whosTurn;
+    var playerId = game.whosTurn + 1;
+    var lastInPlay = inPlay[x].length - 1;
     inPlay[x].push(hands[x][card]);
-    hands[x].splice(card, 1);
+    var lastInPlay = inPlay[x].length - 1;
     player.onCell[x]++;
+    $("#p" + playerId + "card" + player.onCell[game.whosTurn]).text(inPlay[game.whosTurn][lastInPlay].operation + inPlay[game.whosTurn][lastInPlay].val);
+    hands[x].splice(card, 1);
     player.cardScore();
   },
   startTurn: function(){

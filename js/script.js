@@ -1,3 +1,4 @@
+
 function Card(){
   this.val = null;
   //Numerical card value
@@ -168,6 +169,8 @@ var game = {
     var dl = mainDeck.length;
     var y = randomInt(0,dl);
     inPlay[w].push(mainDeck[y]);
+    console.log(mainDeck[y]);
+
     mainDeck.splice(y, 1);
     player.cardScore();
   },
@@ -219,3 +222,5 @@ var inPlay = [[],[]]
 var hands = [[],[]];
 var sideDecks = [[],[]];
 var mainDeck = [];
+var p1iP = $("#p1iP");
+var p2iP = $("#p2iP");

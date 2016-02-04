@@ -224,7 +224,6 @@ var game = {
     }
     clearMainDeck();
     clearSideDecks();
-    clearHands();
     player.standing[0][0] = false;
     player.standing[1][0] = false;
     game.gameOver();

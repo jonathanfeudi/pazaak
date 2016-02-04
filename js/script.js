@@ -114,14 +114,6 @@ function clearHTML(){
   $("#p2card7").text("");
   $("#p2card8").text("");
   $("#p2card9").text("");
-  $("#p1hand1").text("");
-  $("#p1hand2").text("");
-  $("#p1hand3").text("");
-  $("#p1hand4").text("");
-  $("#p2hand1").text("");
-  $("#p2hand2").text("");
-  $("#p2hand3").text("");
-  $("#p2hand4").text("");
 }
 
 var player = {

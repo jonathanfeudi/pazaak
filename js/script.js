@@ -166,6 +166,7 @@ var player = {
   },
   startTurn: function(){
     var x = game.whosTurn;
+    $(".hand").off('click');
     if ((player.standing[0][0]) && (player.standing[1][0])){
       game.checkWin();
       return;
@@ -220,6 +221,8 @@ var game = {
   start: function(){
     var x = randomInt(0, 2);
     game.whosTurn = x;
+    $("#endTurn").on('click', player.endTurn);
+    $("#stand").on('click', player.stand);
     makeMainDeck();
     makeSideDeck();
     dealHands();
@@ -252,12 +255,12 @@ var game = {
     if (((player.scoreArray[0][0] > player.scoreArray[1][0]) && !(player.scoreArray[0][0] > 20)) || (!(player.scoreArray[0][0] > 20) && (player.scoreArray[1][0] > 20))){
       console.log('Player 1 Wins');
       game.wins[0][0] += 1;
-      $("#p1rS").text(game.wins[0][0]);
+      $("#p1rS").text("Rounds won: " + game.wins[0][0]);
       game.clearRound();
     } else if (((player.scoreArray[1][0] > player.scoreArray[0][0]) && !(player.scoreArray[1][0] > 20)) || (!(player.scoreArray[1][0] > 20) && (player.scoreArray[0][0] > 20))){
       console.log('Player 2 Wins');
       game.wins[1][0] += 1;
-      $("#p1rS").text(game.wins[1][0]);
+      $("#p2rS").text("Rounds won: " + game.wins[1][0]);
       game.clearRound();
     }
   },
@@ -293,6 +296,7 @@ var game = {
   },
 };
 
+$("#startGame").on('click', game.start);
 var inPlay = [[],[]]
 var hands = [[],[]];
 var sideDecks = [[],[]];

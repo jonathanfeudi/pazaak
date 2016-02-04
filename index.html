@@ -3,75 +3,81 @@
   <head>
     <meta charset="utf-8">
     <title>It's Pazaak!</title>
+    <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
 <h1>Let's Play Pazaak!</h1>
+<button id="startGame">Start Game</button>
 <div class="roundScore" id="p1rS">
-  p1 Rounds Won
+Rounds Won:
 </div>
+<div class="container">
 <table class="inPlay" id="p1iP">
   <tr>
-  <th>Player 1 inPlay</th>
-  <th class="cardScore" id="p1cS">Score</th>
+  <th>Player 1</th>
+  <th class="cardScore" id="p1cS">0</th>
 </tr>
 <tr class="cardsInPlay">
-  <td class="card" id="p1card1">Card 1</td>
-  <td class="card" id="p1card2">Card 2</td>
-  <td class="card" id="p1card3">Card 3</td>
+  <td class="card" id="p1card1"></td>
+  <td class="card" id="p1card2"></td>
+  <td class="card" id="p1card3"></td>
 </tr>
 <tr class="cardsInPlay">
-  <td class="card" id="p1card4">Card 4</td>
-  <td class="card" id="p1card5">Card 5</td>
-  <td class="card" id="p1card6">Card 6</td>
+  <td class="card" id="p1card4"></td>
+  <td class="card" id="p1card5"></td>
+  <td class="card" id="p1card6"></td>
 </tr>
 <tr class="cardsInPlay">
-  <td class="card" id="p1card7">Card 7</td>
-  <td class="card" id="p1card8">Card 8</td>
-  <td class="card" id="p1card9">Card 9</td>
+  <td class="card" id="p1card7"></td>
+  <td class="card" id="p1card8"></td>
+  <td class="card" id="p1card9"></td>
 </tr>
 </table>
-<table>
+<table id="p2iP">
   <tr>
-  <th class="inPlay" id="p2iP">Player 2 inPlay</th>
-  <th class="cardScore" id="p2cS">Score</th>
+  <th class="inPlay">Player 2</th>
+  <th class="cardScore" id="p2cS">0</th>
 </tr>
 <tr class="cardsInPlay">
-  <td class="card" id="p2card1">Card 1</td>
-  <td class="card" id="p2card2">Card 2</td>
-  <td class="card" id="p2card3">Card 3</td>
+  <td class="card" id="p2card1"></td>
+  <td class="card" id="p2card2"></td>
+  <td class="card" id="p2card3"></td>
 </tr>
 <tr class="cardsInPlay">
-  <td class="card" id="p2card4">Card 4</td>
-  <td class="card" id="p2card5">Card 5</td>
-  <td class="card" id="p2card6">Card 6</td>
+  <td class="card" id="p2card4"></td>
+  <td class="card" id="p2card5"></td>
+  <td class="card" id="p2card6"></td>
 </tr>
 <tr class="cardsInPlay">
-  <td class="card" id="p2card7">Card 7</td>
-  <td class="card" id="p2card8">Card 8</td>
-  <td class="card" id="p2card9">Card 9</td>
+  <td class="card" id="p2card7"></td>
+  <td class="card" id="p2card8"></td>
+  <td class="card" id="p2card9"></td>
 </tr>
 </table>
 <div class="roundScore" id="p2rS">
-  p2 Rounds won
+Rounds won:
+</div>
 </div>
 <table id="p1hand">
   <th>Player 1 Hand</th>
   <tr>
-    <td class="hand p1 card" id="p1hand1" value="0">Card 1</td>
-    <td class="hand p1 card" id="p1hand2" value="1">Card 2</td>
-    <td class="hand p1 card" id="p1hand3" value="2">Card 3</td>
-    <td class="hand p1 card" id="p1hand4" value="3">Card 4</td>
+    <td class="hand p1 card" id="p1hand1" value="0"></td>
+    <td class="hand p1 card" id="p1hand2" value="1"></td>
+    <td class="hand p1 card" id="p1hand3" value="2"></td>
+    <td class="hand p1 card" id="p1hand4" value="3"></td>
   </tr>
 </table>
 <table id="p2hand">
   <th>Player 2 Hand</th>
   <tr>
-    <td class="hand p2 card" id="p2hand1" value="0">Card 1</td>
-    <td class="hand p2 card" id="p2hand2" value="1">Card 2</td>
-    <td class="hand p2 card" id="p2hand3" value="2">Card 3</td>
-    <td class="hand p2 card" id="p2hand4" value="3">Card 4</td>
+    <td class="hand p2 card" id="p2hand1" value="0"></td>
+    <td class="hand p2 card" id="p2hand2" value="1"></td>
+    <td class="hand p2 card" id="p2hand3" value="2"></td>
+    <td class="hand p2 card" id="p2hand4" value="3"></td>
   </tr>
 </table>
+<button id="endTurn">End Turn</button>
+<button id="stand">Stand</button>
 <script src="js/jquery-2.2.0.min.js"></script>
 <script type="text/javascript" src="js/script.js"></script>
   </body>

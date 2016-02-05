@@ -39,14 +39,17 @@ function makeSideDeck(){
   for (var j = 0; j < 2; j++){
     for (var i = 0; i < 10; i++){
       var cardValueRandom = randomInt(1, 7);
-      var oneOfTwo = randomInt(0, 2);
+      var oneInTen = randomInt(0, 10);
       var newCard = new Card();
       newCard.val = cardValueRandom;
-      if (oneOfTwo === 0){
+      if (oneInTen < 5){
         newCard.operation = '+';
-      } else {
+      } else if (oneInTen < 9){
         newCard.operation = '-';
         newCard.val *= -1;
+      } else if (oneInTen == 9){
+        newCard.val = 'D';
+        newCard.operation = '';
       }
       newCard.deck = 'side';
       sideDecks[j].push(newCard);
@@ -183,6 +186,10 @@ var player = {
     var x = game.whosTurn;
     var playerId = game.whosTurn + 1;
     var lastInPlay = inPlay[x].length - 1;
+    if (hands[x][card].val == 'D'){
+      hands[x][card].val = inPlay[x][lastInPlay].val;
+      hands[x][card].operation = inPlay[x][lastInPlay].operation;
+    }
     inPlay[x].push(hands[x][card]);
     var lastInPlay = inPlay[x].length - 1;
     player.onCell[x]++;
@@ -212,6 +219,10 @@ var player = {
     }
     if (player.scoreArray[x][0] == 20){
       player.stand();
+      return;
+    }
+    if ((player.onCell[x] == 9) && (player.scoreArray[x][0] < 21)){
+      game.checkWin();
       return;
     }
     if (game.whosTurn === 0){
@@ -284,6 +295,14 @@ var game = {
     player.cardScore();
   },
   checkWin: function(){
+    var x = game.whosTurn;
+    if ((player.onCell[x] == 9) && (player.scoreArray[x][0] < 21)){
+      game.wins[x][0] += 1;
+      $("#p1rS").text("Rounds won: " + game.wins[0][0]);
+      $("#p2rS").text("Rounds won: " + game.wins[1][0]);
+      game.clearRound();
+      return;
+    }
     if ((player.scoreArray[0][0] == 20) && (player.scoreArray[1][0] == 20)){
       game.clearRound();
       return;

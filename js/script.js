@@ -79,7 +79,9 @@ function displayHands(){
   var j = 1;
   for (var i = 0; i < 4; i++){
     $("#p1hand" + j).text(hands[0][i].operation + hands[0][i].val);
+    $("#p1hand" + j).attr("class", "hand p1 card fill");
     $("#p2hand" + j).text(hands[1][i].operation + hands[1][i].val);
+    $("#p2hand" + j).attr("class", "hand p2 card fill");
     j++;
   }
 };
@@ -104,7 +106,17 @@ function clearHTML(){
   $("#p1card7").text("");
   $("#p1card8").text("");
   $("#p1card9").text("");
-  $("#p2cS").text("");
+  $("#p1card1").attr("class", "card");
+  $("#p1card2").attr("class", "card");
+  $("#p1card3").attr("class", "card");
+  $("#p1card4").attr("class", "card");
+  $("#p1card5").attr("class", "card");
+  $("#p1card6").attr("class", "card");
+  $("#p1card7").attr("class", "card");
+  $("#p1card8").attr("class", "card");
+  $("#p1card9").attr("class", "card");
+  $("#p2cS").text("0");
+  $("#p1cS").text("0");
   $("#p2card1").text("");
   $("#p2card2").text("");
   $("#p2card3").text("");
@@ -114,6 +126,15 @@ function clearHTML(){
   $("#p2card7").text("");
   $("#p2card8").text("");
   $("#p2card9").text("");
+  $("#p2card1").attr("class", "card");
+  $("#p2card2").attr("class", "card");
+  $("#p2card3").attr("class", "card");
+  $("#p2card4").attr("class", "card");
+  $("#p2card5").attr("class", "card");
+  $("#p2card6").attr("class", "card");
+  $("#p2card7").attr("class", "card");
+  $("#p2card8").attr("class", "card");
+  $("#p2card9").attr("class", "card");
 }
 
 function playCard(event){
@@ -141,6 +162,10 @@ var player = {
   standing: [[false],[false]],
   stand: function(){
     var x = game.whosTurn;
+    if (player.scoreArray[x][0] > 20){
+      game.checkWin();
+      return;
+    }
     player.standing[x][0] = true;
     if (game.whosTurn === 0){
       game.whosTurn = 1;
@@ -155,12 +180,17 @@ var player = {
   },
   playCard: function(card){
     var x = game.whosTurn;
+    var handNo = card + 1;
+    console.log(handNo);
     var playerId = game.whosTurn + 1;
     var lastInPlay = inPlay[x].length - 1;
     inPlay[x].push(hands[x][card]);
     var lastInPlay = inPlay[x].length - 1;
     player.onCell[x]++;
     $("#p" + playerId + "card" + player.onCell[game.whosTurn]).text(inPlay[game.whosTurn][lastInPlay].operation + inPlay[game.whosTurn][lastInPlay].val);
+    $("#p" + playerId + "card" + player.onCell[game.whosTurn]).attr("class", "card fill");
+    $("#p" + playerId + "hand" + handNo).text("");
+    $("#p" + playerId + "hand" + handNo).attr("class", "hand p" + playerId + "card");
     // hands[x].splice(card, 1);
     player.cardScore();
   },
@@ -246,8 +276,14 @@ var game = {
     inPlay[w].push(mainDeck[y]);
     var lastInPlay = inPlay[w].length - 1;
     $("#p" + playerId + "card" + player.onCell[game.whosTurn]).text(inPlay[game.whosTurn][lastInPlay].operation + inPlay[game.whosTurn][lastInPlay].val);
+    $("#p" + playerId + "card" + player.onCell[game.whosTurn]).attr("class", "card fill");
     mainDeck.splice(y, 1);
     eventListeners();
+    if (game.whosTurn == 0){
+      $("#heading").text("Player 1's turn");
+    } else {
+      $("#heading").text("Player 2's turn");
+    };
     player.cardScore();
   },
   checkWin: function(){
@@ -288,6 +324,11 @@ var game = {
   },
   gameOver: function(){
     if ((game.wins[0][0] == 3) || (game.wins[1][0] == 3)){
+      if (game.wins[0][0] > game.wins[1][0]){
+        $("#heading").text("Player 1 Wins!");
+      } else{
+        $("#heading").text("Player 2 Wins!");
+      }
       return;
     }
     if ((game.wins[0][0] < 3) && (game.wins[1][0] < 3)){

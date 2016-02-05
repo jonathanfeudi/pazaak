@@ -3,6 +3,7 @@ url(http://fonts.googleapis.com/css?family=Lato);
 
 body {
   background: url(../img/space.jpg);
+  text-align: center;
 }
 
 h1{
@@ -21,19 +22,34 @@ h1{
 .hands {
   margin: 0 auto;
   width: 400px;
-  display: inline;
+  display: inline-block;
+}
+
+.hand{
+  cursor: pointer;
+}
+
+.label{
+  font-size: 25px;
+  font-family: 'Lato';
 }
 
 .card{
-  background-color: #adadad;
+  font-family: 'Lato';
+  line-height: 100px;
+  font-size:40px;
   float: left;
   margin: 5px;
   border: 2px solid;
   border-color: white;
   color: #3344c6;
   height: 100px;
-  width: 75px;
+  width: 76px;
   vertical-align: middle;
+}
+
+.fill{
+  background-color: #adadad;
 }
 
 .label{
@@ -42,12 +58,4 @@ h1{
 
 .played{
   color: red;
-}
-
-#p1hand{
-  cursor: pointer;
-}
-
-#p2hand{
-  cursor: pointer;
 }

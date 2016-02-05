@@ -39,7 +39,7 @@ function makeSideDeck(){
   for (var j = 0; j < 2; j++){
     for (var i = 0; i < 10; i++){
       var cardValueRandom = randomInt(1, 7);
-      var oneInTen = randomInt(0, 10);
+      var oneInTen = randomInt(0, 11);
       var newCard = new Card();
       newCard.val = cardValueRandom;
       if (oneInTen < 5){
@@ -51,6 +51,8 @@ function makeSideDeck(){
       } else if (oneInTen == 9){
         newCard.val = 'D';
         newCard.operation = '';
+      } else if (oneInTen == 10){
+        newCard.operation = "&";
       }
       newCard.deck = 'side';
       sideDecks[j].push(newCard);
@@ -100,7 +102,7 @@ function clearHands(){
 }
 
 function clearHTML(){
-  $("#p1cS").text("");
+  $("#p1cS").text("0");
   $("#p2cS").text("0");
   for (var i = 1; i <10; i++){
     $("#p1card" + i).text("");
@@ -131,11 +133,21 @@ function eventListeners(){
   $(".played").off('click');
 };
 
+function plusMinus(){
+  var x = game.whosTurn;
+  var playerId = game.whosTurn + 1;
+  var lastInPlay = inPlay[x].length - 1;
+  inPlay[x][lastInPlay].val *= -1;
+  player.cardScore();
+  // $("#p" + playerId + "card" + (inPlay[x].length)).off('click');
+};
+
 var player = {
   onCell: [0,0],
   standing: [[false],[false]],
   stand: function(){
     var x = game.whosTurn;
+    var playerId = game.whosTurn + 1;
     if (player.scoreArray[x][0] > 20){
       game.checkWin();
       return;
@@ -150,6 +162,7 @@ var player = {
       game.checkWin();
       return;
     }
+    $("#p" + playerId + "card" + (inPlay[x].length)).off('click');
     player.startTurn();
   },
   playCard: function(card){
@@ -159,6 +172,9 @@ var player = {
     if (hands[x][card].val == 'D'){
       hands[x][card].val = inPlay[x][lastInPlay].val;
       hands[x][card].operation = inPlay[x][lastInPlay].operation;
+    }
+    if (hands[x][card].operation = '&'){
+      $("#p" + playerId + "card" + (inPlay[x].length + 1)).on('click', plusMinus);
     }
     inPlay[x].push(hands[x][card]);
     var lastInPlay = inPlay[x].length - 1;
@@ -183,6 +199,7 @@ var player = {
   },
   endTurn: function(){
     var x = game.whosTurn;
+    var playerId = game.whosTurn + 1;
     if (player.scoreArray[x][0] > 20){
       game.checkWin();
       return;
@@ -195,6 +212,7 @@ var player = {
       game.checkWin();
       return;
     }
+    $("#p" + playerId + "card" + (inPlay[x].length)).off('click');
     if (game.whosTurn === 0){
       game.whosTurn = 1;
     } else {
@@ -266,10 +284,14 @@ var game = {
   },
   checkWin: function(){
     var x = game.whosTurn;
+    if ((player.scoreArray[0][0] == player.scoreArray[1][0])){
+      game.clearRound();
+      return;
+    }
     if ((player.onCell[x] == 9) && (player.scoreArray[x][0] < 21)){
       game.wins[x][0] += 1;
-      $("#p1rS").text("Rounds won: " + game.wins[0][0]);
-      $("#p2rS").text("Rounds won: " + game.wins[1][0]);
+      $("#p1rS").text("Rounds Won: " + game.wins[0][0]);
+      $("#p2rS").text("Rounds Won: " + game.wins[1][0]);
       game.clearRound();
       return;
     }

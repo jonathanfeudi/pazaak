@@ -142,7 +142,6 @@ function playCard(event){
   var cardNo = this.getAttribute("value");
   var currentClass = this.getAttribute("class");
   player.playCard(cardNo);
-  // this.setAttribute("class", currentClass + " played");
   this.setAttribute("class", "hand p" + playerId + " card");
   $(".played").off('click');
 }

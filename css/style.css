@@ -16,9 +16,11 @@ h1{
   color: #2bdef2;
 }
 
-.card{
+/*.card{
   color: #2bdef2;
-}
+  height: 100px;
+  width: 75px;
+}*/
 
 .played{
   color: red;

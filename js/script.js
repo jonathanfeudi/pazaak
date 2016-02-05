@@ -244,7 +244,6 @@ var game = {
     var playerId = game.whosTurn + 1;
     player.onCell[w]++;
     inPlay[w].push(mainDeck[y]);
-    console.log(mainDeck[y]);
     var lastInPlay = inPlay[w].length - 1;
     $("#p" + playerId + "card" + player.onCell[game.whosTurn]).text(inPlay[game.whosTurn][lastInPlay].operation + inPlay[game.whosTurn][lastInPlay].val);
     mainDeck.splice(y, 1);
@@ -257,12 +256,10 @@ var game = {
       return;
     }
     if (((player.scoreArray[0][0] > player.scoreArray[1][0]) && !(player.scoreArray[0][0] > 20)) || (!(player.scoreArray[0][0] > 20) && (player.scoreArray[1][0] > 20))){
-      console.log('Player 1 Wins');
       game.wins[0][0] += 1;
       $("#p1rS").text("Rounds won: " + game.wins[0][0]);
       game.clearRound();
     } else if (((player.scoreArray[1][0] > player.scoreArray[0][0]) && !(player.scoreArray[1][0] > 20)) || (!(player.scoreArray[1][0] > 20) && (player.scoreArray[0][0] > 20))){
-      console.log('Player 2 Wins');
       game.wins[1][0] += 1;
       $("#p2rS").text("Rounds won: " + game.wins[1][0]);
       game.clearRound();
@@ -291,7 +288,6 @@ var game = {
   },
   gameOver: function(){
     if ((game.wins[0][0] == 3) || (game.wins[1][0] == 3)){
-      console.log('Game over.')
       return;
     }
     if ((game.wins[0][0] < 3) && (game.wins[1][0] < 3)){

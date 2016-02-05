@@ -1,3 +1,4 @@
+
 function Card(){
   this.val = null;
   //Numerical card value
@@ -64,12 +65,22 @@ function clearSideDecks(){
 
 function dealHands(){
   for (var j = 0; j < 2; j++){
-    for (var i = 0; i < 4; i++){
+    for (var i = 1; i < 5; i++){
       var y = sideDecks[j].length;
       var x = randomInt(0,y);
       hands[j].push(sideDecks[j][x]);
       sideDecks[j].splice(x, 1);
     }
+  }
+  displayHands();
+};
+
+function displayHands(){
+  var j = 1;
+  for (var i = 0; i < 4; i++){
+    $("#p1hand" + j).text(hands[0][i].operation + hands[0][i].val);
+    $("#p2hand" + j).text(hands[1][i].operation + hands[1][i].val);
+    j++;
   }
 };
 
@@ -82,7 +93,51 @@ function clearHands(){
   }
 }
 
+function clearHTML(){
+  $("#p1cS").text("");
+  $("#p1card1").text("");
+  $("#p1card2").text("");
+  $("#p1card3").text("");
+  $("#p1card4").text("");
+  $("#p1card5").text("");
+  $("#p1card6").text("");
+  $("#p1card7").text("");
+  $("#p1card8").text("");
+  $("#p1card9").text("");
+  $("#p2cS").text("");
+  $("#p2card1").text("");
+  $("#p2card2").text("");
+  $("#p2card3").text("");
+  $("#p2card4").text("");
+  $("#p2card5").text("");
+  $("#p2card6").text("");
+  $("#p2card7").text("");
+  $("#p2card8").text("");
+  $("#p2card9").text("");
+}
+
+function playCard(event){
+  var cardNo = this.getAttribute("value");
+  var currentClass = this.getAttribute("class");
+  player.playCard(cardNo);
+  this.setAttribute("class", currentClass + " played");
+  $(".played").off('click');
+}
+
+function eventListeners(){
+  if (game.whosTurn == 0){
+    $(".hand.p1").on('click', playCard);
+    $(".hand.p2").off('click');
+  }
+  if (game.whosTurn == 1){
+    $(".hand.p2").on('click', playCard);
+    $(".hand.p1").off('click');
+  }
+  $(".played").off('click');
+};
+
 var player = {
+  onCell: [0,0],
   standing: [[false],[false]],
   stand: function(){
     var x = game.whosTurn;
@@ -100,12 +155,18 @@ var player = {
   },
   playCard: function(card){
     var x = game.whosTurn;
+    var playerId = game.whosTurn + 1;
+    var lastInPlay = inPlay[x].length - 1;
     inPlay[x].push(hands[x][card]);
-    hands[x].splice(card, 1);
+    var lastInPlay = inPlay[x].length - 1;
+    player.onCell[x]++;
+    $("#p" + playerId + "card" + player.onCell[game.whosTurn]).text(inPlay[game.whosTurn][lastInPlay].operation + inPlay[game.whosTurn][lastInPlay].val);
+    // hands[x].splice(card, 1);
     player.cardScore();
   },
   startTurn: function(){
     var x = game.whosTurn;
+    $(".hand").off('click');
     if ((player.standing[0][0]) && (player.standing[1][0])){
       game.checkWin();
       return;
@@ -135,6 +196,7 @@ var player = {
   },
   cardScore: function(){
     var x = game.whosTurn;
+    var playerId = game.whosTurn + 1;
     var cardCount = player.cardArray[x].length;
     if (cardCount > 0){
       player.cardArray[x].splice(0, cardCount);
@@ -147,6 +209,7 @@ var player = {
     }
     var total = player.cardArray[x].reduce(addScores, 0);
     player.scoreArray[x].push(total);
+    $("#p" + playerId + "cS").text(player.scoreArray[x][0]);
   },
   cardArray: [[],[]],
   scoreArray: [[0],[0]],
@@ -156,29 +219,49 @@ var game = {
   whosTurn: null,
   wins: [[0],[0]],
   start: function(){
+    var x = randomInt(0, 2);
+    game.whosTurn = x;
+    $("#endTurn").on('click', player.endTurn);
+    $("#stand").on('click', player.stand);
     makeMainDeck();
     makeSideDeck();
     dealHands();
+    game.flop();
+  },
+  roundStart: function(){
+    clearHTML();
+    player.onCell = [0,0];
     var x = randomInt(0, 2);
     game.whosTurn = x;
+    makeMainDeck();
     game.flop();
   },
   flop: function(){
     var w = game.whosTurn;
     var dl = mainDeck.length;
     var y = randomInt(0,dl);
+    var cellNo = player.onCell[w];
+    var playerId = game.whosTurn + 1;
+    player.onCell[w]++;
     inPlay[w].push(mainDeck[y]);
+    var lastInPlay = inPlay[w].length - 1;
+    $("#p" + playerId + "card" + player.onCell[game.whosTurn]).text(inPlay[game.whosTurn][lastInPlay].operation + inPlay[game.whosTurn][lastInPlay].val);
     mainDeck.splice(y, 1);
+    eventListeners();
     player.cardScore();
   },
   checkWin: function(){
+    if ((player.scoreArray[0][0] == 20) && (player.scoreArray[1][0] == 20)){
+      game.clearRound();
+      return;
+    }
     if (((player.scoreArray[0][0] > player.scoreArray[1][0]) && !(player.scoreArray[0][0] > 20)) || (!(player.scoreArray[0][0] > 20) && (player.scoreArray[1][0] > 20))){
-      console.log('Player 1 Wins');
       game.wins[0][0] += 1;
+      $("#p1rS").text("Rounds won: " + game.wins[0][0]);
       game.clearRound();
     } else if (((player.scoreArray[1][0] > player.scoreArray[0][0]) && !(player.scoreArray[1][0] > 20)) || (!(player.scoreArray[1][0] > 20) && (player.scoreArray[0][0] > 20))){
-      console.log('Player 2 Wins');
       game.wins[1][0] += 1;
+      $("#p2rS").text("Rounds won: " + game.wins[1][0]);
       game.clearRound();
     }
   },
@@ -199,22 +282,21 @@ var game = {
     }
     clearMainDeck();
     clearSideDecks();
-    clearHands();
     player.standing[0][0] = false;
     player.standing[1][0] = false;
     game.gameOver();
   },
   gameOver: function(){
     if ((game.wins[0][0] == 3) || (game.wins[1][0] == 3)){
-      console.log('Game over.')
       return;
     }
     if ((game.wins[0][0] < 3) && (game.wins[1][0] < 3)){
-      game.start();
+      game.roundStart();
     }
   },
 };
 
+$("#startGame").on('click', game.start);
 var inPlay = [[],[]]
 var hands = [[],[]];
 var sideDecks = [[],[]];

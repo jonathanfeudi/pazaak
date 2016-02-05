@@ -1,0 +1,35 @@
+@import
+url(http://fonts.googleapis.com/css?family=Lato);
+
+body {
+  background: url(../img/space.jpg);
+}
+
+h1{
+  font-family: 'Lato';
+  color: #2bdef2;
+  font-size: 75px;
+  text-align: center;
+}
+
+.roundScore{
+  color: #2bdef2;
+}
+
+/*.card{
+  color: #2bdef2;
+  height: 100px;
+  width: 75px;
+}*/
+
+.played{
+  color: red;
+}
+
+#p1hand{
+  cursor: pointer;
+}
+
+#p2hand{
+  cursor: pointer;
+}

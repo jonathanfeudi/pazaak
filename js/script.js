@@ -45,7 +45,8 @@ function makeSideDeck(){
       if (oneInTen < 5){
         newCard.operation = '+';
       } else if (oneInTen < 9){
-        newCard.operation = '-';
+        // newCard.operation = '-';
+        newCard.operation = '';
         newCard.val *= -1;
       } else if (oneInTen == 9){
         newCard.val = 'D';
@@ -100,45 +101,14 @@ function clearHands(){
 
 function clearHTML(){
   $("#p1cS").text("");
-  $("#p1card1").text("");
-  $("#p1card2").text("");
-  $("#p1card3").text("");
-  $("#p1card4").text("");
-  $("#p1card5").text("");
-  $("#p1card6").text("");
-  $("#p1card7").text("");
-  $("#p1card8").text("");
-  $("#p1card9").text("");
-  $("#p1card1").attr("class", "card");
-  $("#p1card2").attr("class", "card");
-  $("#p1card3").attr("class", "card");
-  $("#p1card4").attr("class", "card");
-  $("#p1card5").attr("class", "card");
-  $("#p1card6").attr("class", "card");
-  $("#p1card7").attr("class", "card");
-  $("#p1card8").attr("class", "card");
-  $("#p1card9").attr("class", "card");
   $("#p2cS").text("0");
-  $("#p1cS").text("0");
-  $("#p2card1").text("");
-  $("#p2card2").text("");
-  $("#p2card3").text("");
-  $("#p2card4").text("");
-  $("#p2card5").text("");
-  $("#p2card6").text("");
-  $("#p2card7").text("");
-  $("#p2card8").text("");
-  $("#p2card9").text("");
-  $("#p2card1").attr("class", "card");
-  $("#p2card2").attr("class", "card");
-  $("#p2card3").attr("class", "card");
-  $("#p2card4").attr("class", "card");
-  $("#p2card5").attr("class", "card");
-  $("#p2card6").attr("class", "card");
-  $("#p2card7").attr("class", "card");
-  $("#p2card8").attr("class", "card");
-  $("#p2card9").attr("class", "card");
-}
+  for (var i = 1; i <10; i++){
+    $("#p1card" + i).text("");
+    $("#p1card" + i).attr("class", "card");
+    $("#p2card" + i).text("");
+    $("#p2card" + i).attr("class", "card");
+  }
+};
 
 function playCard(event){
   var playerId = game.whosTurn + 1;
@@ -309,11 +279,11 @@ var game = {
     }
     if (((player.scoreArray[0][0] > player.scoreArray[1][0]) && !(player.scoreArray[0][0] > 20)) || (!(player.scoreArray[0][0] > 20) && (player.scoreArray[1][0] > 20))){
       game.wins[0][0] += 1;
-      $("#p1rS").text("Rounds won: " + game.wins[0][0]);
+      $("#p1rS").text("Rounds Won: " + game.wins[0][0]);
       game.clearRound();
     } else if (((player.scoreArray[1][0] > player.scoreArray[0][0]) && !(player.scoreArray[1][0] > 20)) || (!(player.scoreArray[1][0] > 20) && (player.scoreArray[0][0] > 20))){
       game.wins[1][0] += 1;
-      $("#p2rS").text("Rounds won: " + game.wins[1][0]);
+      $("#p2rS").text("Rounds Won: " + game.wins[1][0]);
       game.clearRound();
     }
   },

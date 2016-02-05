@@ -76,7 +76,7 @@ function dealHands(){
 };
 
 function displayHands(){
-  var j = 1;
+  var j = 0;
   for (var i = 0; i < 4; i++){
     $("#p1hand" + j).text(hands[0][i].operation + hands[0][i].val);
     $("#p1hand" + j).attr("class", "hand p1 card fill");
@@ -138,10 +138,12 @@ function clearHTML(){
 }
 
 function playCard(event){
+  var playerId = game.whosTurn + 1;
   var cardNo = this.getAttribute("value");
   var currentClass = this.getAttribute("class");
   player.playCard(cardNo);
-  this.setAttribute("class", currentClass + " played");
+  // this.setAttribute("class", currentClass + " played");
+  this.setAttribute("class", "hand p" + playerId + " card");
   $(".played").off('click');
 }
 
@@ -180,8 +182,6 @@ var player = {
   },
   playCard: function(card){
     var x = game.whosTurn;
-    var handNo = card + 1;
-    console.log(handNo);
     var playerId = game.whosTurn + 1;
     var lastInPlay = inPlay[x].length - 1;
     inPlay[x].push(hands[x][card]);
@@ -189,9 +189,7 @@ var player = {
     player.onCell[x]++;
     $("#p" + playerId + "card" + player.onCell[game.whosTurn]).text(inPlay[game.whosTurn][lastInPlay].operation + inPlay[game.whosTurn][lastInPlay].val);
     $("#p" + playerId + "card" + player.onCell[game.whosTurn]).attr("class", "card fill");
-    $("#p" + playerId + "hand" + handNo).text("");
-    $("#p" + playerId + "hand" + handNo).attr("class", "hand p" + playerId + "card");
-    // hands[x].splice(card, 1);
+    $("#p" + playerId + "hand" + card).text("");
     player.cardScore();
   },
   startTurn: function(){

@@ -10,7 +10,7 @@ function Card(){
 
 function addScores(x, y){
   return x + y;
-}
+};
 //http://stackoverflow.com/questions/1230233/how-to-find-the-sum-of-an-array-of-numbers
 
 function randomInt(min, max){

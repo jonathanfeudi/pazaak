@@ -12,15 +12,33 @@ h1{
   text-align: center;
 }
 
-.roundScore{
-  color: #2bdef2;
+.container {
+  margin: 0 auto;
+  width: 325px;
+  display: inline-block;
 }
 
-/*.card{
-  color: #2bdef2;
+.hands {
+  margin: 0 auto;
+  width: 400px;
+  display: inline;
+}
+
+.card{
+  background-color: #adadad;
+  float: left;
+  margin: 5px;
+  border: 2px solid;
+  border-color: white;
+  color: #3344c6;
   height: 100px;
   width: 75px;
-}*/
+  vertical-align: middle;
+}
+
+.label{
+  color: #2bdef2;
+}
 
 .played{
   color: red;

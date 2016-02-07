@@ -1,11 +1,8 @@
 
 function Card(){
   this.val = null;
-  //Numerical card value
   this.operation = '';
-  //Add, subtract
   this.deck = '';
-  //side or main
 };
 
 function addScores(x, y){

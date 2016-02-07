@@ -2,7 +2,7 @@
 url(http://fonts.googleapis.com/css?family=Lato);
 
 body {
-  background: url(../img/space.jpg);
+  background: url(../img/spaceT.jpg);
   text-align: center;
 }
 
@@ -14,25 +14,15 @@ h1{
   margin: 20px;
 }
 
-.container {
-  margin: 0 auto;
-  width: 325px;
-  display: inline-block;
-}
-
-.hands {
-  margin: 0 auto;
-  width: 400px;
-  display: inline-block;
+h3{
+  font-family: 'Lato';
+  color: #2bdef2;
+  font-size: 25px;
+  text-align: center;
 }
 
 .hand{
   cursor: pointer;
-}
-
-.label{
-  font-size: 25px;
-  font-family: 'Lato';
 }
 
 .card{
@@ -51,8 +41,4 @@ h1{
 
 .fill{
   background-color: #adadad;
-}
-
-.label{
-  color: #2bdef2;
 }

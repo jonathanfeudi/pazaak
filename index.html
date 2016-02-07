@@ -3,62 +3,94 @@
   <head>
     <meta charset="utf-8">
     <title>It's Pazaak!</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
+
   </head>
   <body>
 <h1 id="heading">Let's Play Pazaak!</h1>
 <button id="startGame">Start Game</button>
-
-<div class="container" id="playArea1">
-<div id="p1iP">
-  <div class="label">Player 1</div>
-  <div class="label" id="p1cS">0</div>
-  <div class="label" id="p1rS">
+<div class="container">
+  <div class="row">
+<div class="container col-md-2">
+  <h3>
+  <div>Player 1</div>
+  <div id="p1cS">0</div>
+  <div id="p1rS">
   Rounds Won: </div>
+</h3>
+  <button id="endTurn">End Turn</button>
+  <button id="stand">Stand</button>
+</div>
+<div class="container col-md-4">
+  <div class="row">
   <div class="card inPlay" id="p1card1"></div>
   <div class="card inPlay" id="p1card2"></div>
   <div class="card inPlay" id="p1card3"></div>
+</div>
+  <div class="row">
   <div class="card inPlay" id="p1card4"></div>
   <div class="card inPlay" id="p1card5"></div>
   <div class="card inPlay" id="p1card6"></div>
+</div>
+  <div class="row">
   <div class="card inPlay" id="p1card7"></div>
   <div class="card inPlay" id="p1card8"></div>
   <div class="card inPlay" id="p1card9"></div>
 </div>
 </div>
-<div class="container" id="playArea2">
-<div id="p2iP">
-  <div class="label">Player 2</div>
-  <div class="label" id="p2cS">0</div>
-  <div class="label" id="p2rS">
-  Rounds Won: </div>
+<div class="container col-md-4">
+  <div class="row">
   <div class="card inPlay" id="p2card1"></div>
   <div class="card inPlay" id="p2card2"></div>
   <div class="card inPlay" id="p2card3"></div>
+  </div>
+  <div class="row">
   <div class="card inPlay" id="p2card4"></div>
   <div class="card inPlay" id="p2card5"></div>
   <div class="card inPlay" id="p2card6"></div>
+  </div>
+  <div class="row">
   <div class="card inPlay" id="p2card7"></div>
   <div class="card inPlay" id="p2card8"></div>
   <div class="card inPlay" id="p2card9"></div>
+  </div>
+</div>
+<div class="container col-md-2">
+  <h3>
+  <div>Player 2</div>
+  <div id="p2cS">0</div>
+  <div id="p2rS">
+  Rounds Won: </div>
+</h3>
+  <button id="endTurn2">End Turn</button>
+  <button id="stand2">Stand</button>
 </div>
 </div>
-<button id="endTurn">End Turn</button>
-<button id="stand">Stand</button>
-  <div class="hands" id="p1hand">
-    <div class="label">Player 1 Hand</div>
+<div class="row">
+  <h3>
+  <div class="col-md-6">Player 1 Hand</div>
+  <div class="col-md-6">Player 2 Hand</div>
+</h3>
+</div>
+<div class="row">
+  <div class="container hands col-md-6" id="p1hand">
+
     <div class="hand p1 card" id="p1hand0" value="0"></div>
     <div class="hand p1 card" id="p1hand1" value="1"></div>
     <div class="hand p1 card" id="p1hand2" value="2"></div>
     <div class="hand p1 card" id="p1hand3" value="3"></div>
   </div>
-  <div class="hands" id="p2hand">
-    <div class="label">Player 2 Hand</div>
+  <div class="container hands col-md-6" id="p2hand">
+
     <div class="hand p2 card" id="p2hand0" value="0"></div>
     <div class="hand p2 card" id="p2hand1" value="1"></div>
     <div class="hand p2 card" id="p2hand2" value="2"></div>
     <div class="hand p2 card" id="p2hand3" value="3"></div>
   </div>
+</div>
+</div>
 <script src="js/jquery-2.2.0.min.js"></script>
 <script type="text/javascript" src="js/script.js"></script>
   </body>

@@ -248,6 +248,8 @@ var game = {
     game.whosTurn = x;
     $("#endTurn").on('click', player.endTurn);
     $("#stand").on('click', player.stand);
+    $("#endTurn2").on('click', player.endTurn);
+    $("#stand2").on('click', player.stand);
     makeMainDeck();
     makeSideDeck();
     dealHands();

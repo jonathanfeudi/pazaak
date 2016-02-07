@@ -139,7 +139,6 @@ function plusMinus(){
   var lastInPlay = inPlay[x].length - 1;
   inPlay[x][lastInPlay].val *= -1;
   player.cardScore();
-  // $("#p" + playerId + "card" + (inPlay[x].length)).off('click');
 };
 
 var player = {
@@ -169,12 +168,12 @@ var player = {
     var x = game.whosTurn;
     var playerId = game.whosTurn + 1;
     var lastInPlay = inPlay[x].length - 1;
+    if (hands[x][card].operation == '&'){
+      $("#p" + playerId + "card" + (inPlay[x].length + 1)).on('click', plusMinus);
+    }
     if (hands[x][card].val == 'D'){
       hands[x][card].val = inPlay[x][lastInPlay].val;
       hands[x][card].operation = inPlay[x][lastInPlay].operation;
-    }
-    if (hands[x][card].operation = '&'){
-      $("#p" + playerId + "card" + (inPlay[x].length + 1)).on('click', plusMinus);
     }
     inPlay[x].push(hands[x][card]);
     var lastInPlay = inPlay[x].length - 1;

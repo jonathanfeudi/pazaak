@@ -3,6 +3,7 @@ url(http://fonts.googleapis.com/css?family=Lato);
 
 body {
   background: url(../img/space.jpg);
+  text-align: center;
 }
 
 h1{
@@ -10,26 +11,48 @@ h1{
   color: #2bdef2;
   font-size: 75px;
   text-align: center;
+  margin: 20px;
 }
 
-.roundScore{
-  color: #2bdef2;
+.container {
+  margin: 0 auto;
+  width: 325px;
+  display: inline-block;
 }
 
-/*.card{
-  color: #2bdef2;
+.hands {
+  margin: 0 auto;
+  width: 400px;
+  display: inline-block;
+}
+
+.hand{
+  cursor: pointer;
+}
+
+.label{
+  font-size: 25px;
+  font-family: 'Lato';
+}
+
+.card{
+  font-family: 'Lato';
+  line-height: 100px;
+  font-size:40px;
+  float: left;
+  margin: 5px;
+  border: 2px solid;
+  border-color: white;
+  color: #3344c6;
   height: 100px;
-  width: 75px;
-}*/
-
-.played{
-  color: red;
+  width: 76px;
+  vertical-align: middle;
 }
 
-#p1hand{
-  cursor: pointer;
+.fill{
+  background-color: #adadad;
 }
 
-#p2hand{
-  cursor: pointer;
+.label{
+  color: #2bdef2;
 }

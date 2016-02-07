@@ -10,7 +10,7 @@ function Card(){
 
 function addScores(x, y){
   return x + y;
-}
+};
 //http://stackoverflow.com/questions/1230233/how-to-find-the-sum-of-an-array-of-numbers
 
 function randomInt(min, max){
@@ -39,14 +39,20 @@ function makeSideDeck(){
   for (var j = 0; j < 2; j++){
     for (var i = 0; i < 10; i++){
       var cardValueRandom = randomInt(1, 7);
-      var oneOfTwo = randomInt(0, 2);
+      var oneInTen = randomInt(0, 11);
       var newCard = new Card();
       newCard.val = cardValueRandom;
-      if (oneOfTwo === 0){
+      if (oneInTen < 5){
         newCard.operation = '+';
-      } else {
-        newCard.operation = '-';
+      } else if (oneInTen < 9){
+        // newCard.operation = '-';
+        newCard.operation = '';
         newCard.val *= -1;
+      } else if (oneInTen == 9){
+        newCard.val = 'D';
+        newCard.operation = '';
+      } else if (oneInTen == 10){
+        newCard.operation = "&";
       }
       newCard.deck = 'side';
       sideDecks[j].push(newCard);
@@ -76,10 +82,12 @@ function dealHands(){
 };
 
 function displayHands(){
-  var j = 1;
+  var j = 0;
   for (var i = 0; i < 4; i++){
     $("#p1hand" + j).text(hands[0][i].operation + hands[0][i].val);
+    $("#p1hand" + j).attr("class", "hand p1 card fill");
     $("#p2hand" + j).text(hands[1][i].operation + hands[1][i].val);
+    $("#p2hand" + j).attr("class", "hand p2 card fill");
     j++;
   }
 };
@@ -94,33 +102,22 @@ function clearHands(){
 }
 
 function clearHTML(){
-  $("#p1cS").text("");
-  $("#p1card1").text("");
-  $("#p1card2").text("");
-  $("#p1card3").text("");
-  $("#p1card4").text("");
-  $("#p1card5").text("");
-  $("#p1card6").text("");
-  $("#p1card7").text("");
-  $("#p1card8").text("");
-  $("#p1card9").text("");
-  $("#p2cS").text("");
-  $("#p2card1").text("");
-  $("#p2card2").text("");
-  $("#p2card3").text("");
-  $("#p2card4").text("");
-  $("#p2card5").text("");
-  $("#p2card6").text("");
-  $("#p2card7").text("");
-  $("#p2card8").text("");
-  $("#p2card9").text("");
-}
+  $("#p1cS").text("0");
+  $("#p2cS").text("0");
+  for (var i = 1; i <10; i++){
+    $("#p1card" + i).text("");
+    $("#p1card" + i).attr("class", "card");
+    $("#p2card" + i).text("");
+    $("#p2card" + i).attr("class", "card");
+  }
+};
 
 function playCard(event){
+  var playerId = game.whosTurn + 1;
   var cardNo = this.getAttribute("value");
   var currentClass = this.getAttribute("class");
   player.playCard(cardNo);
-  this.setAttribute("class", currentClass + " played");
+  this.setAttribute("class", "hand p" + playerId + " card");
   $(".played").off('click');
 }
 
@@ -136,11 +133,24 @@ function eventListeners(){
   $(".played").off('click');
 };
 
+function plusMinus(){
+  var x = game.whosTurn;
+  var playerId = game.whosTurn + 1;
+  var lastInPlay = inPlay[x].length - 1;
+  inPlay[x][lastInPlay].val *= -1;
+  player.cardScore();
+};
+
 var player = {
   onCell: [0,0],
   standing: [[false],[false]],
   stand: function(){
     var x = game.whosTurn;
+    var playerId = game.whosTurn + 1;
+    if (player.scoreArray[x][0] > 20){
+      game.checkWin();
+      return;
+    }
     player.standing[x][0] = true;
     if (game.whosTurn === 0){
       game.whosTurn = 1;
@@ -151,17 +161,26 @@ var player = {
       game.checkWin();
       return;
     }
+    $("#p" + playerId + "card" + (inPlay[x].length)).off('click');
     player.startTurn();
   },
   playCard: function(card){
     var x = game.whosTurn;
     var playerId = game.whosTurn + 1;
     var lastInPlay = inPlay[x].length - 1;
+    if (hands[x][card].operation == '&'){
+      $("#p" + playerId + "card" + (inPlay[x].length + 1)).on('click', plusMinus);
+    }
+    if (hands[x][card].val == 'D'){
+      hands[x][card].val = inPlay[x][lastInPlay].val;
+      hands[x][card].operation = inPlay[x][lastInPlay].operation;
+    }
     inPlay[x].push(hands[x][card]);
     var lastInPlay = inPlay[x].length - 1;
     player.onCell[x]++;
     $("#p" + playerId + "card" + player.onCell[game.whosTurn]).text(inPlay[game.whosTurn][lastInPlay].operation + inPlay[game.whosTurn][lastInPlay].val);
-    // hands[x].splice(card, 1);
+    $("#p" + playerId + "card" + player.onCell[game.whosTurn]).attr("class", "card fill");
+    $("#p" + playerId + "hand" + card).text("");
     player.cardScore();
   },
   startTurn: function(){
@@ -179,6 +198,7 @@ var player = {
   },
   endTurn: function(){
     var x = game.whosTurn;
+    var playerId = game.whosTurn + 1;
     if (player.scoreArray[x][0] > 20){
       game.checkWin();
       return;
@@ -187,6 +207,11 @@ var player = {
       player.stand();
       return;
     }
+    if ((player.onCell[x] == 9) && (player.scoreArray[x][0] < 21)){
+      game.checkWin();
+      return;
+    }
+    $("#p" + playerId + "card" + (inPlay[x].length)).off('click');
     if (game.whosTurn === 0){
       game.whosTurn = 1;
     } else {
@@ -246,22 +271,40 @@ var game = {
     inPlay[w].push(mainDeck[y]);
     var lastInPlay = inPlay[w].length - 1;
     $("#p" + playerId + "card" + player.onCell[game.whosTurn]).text(inPlay[game.whosTurn][lastInPlay].operation + inPlay[game.whosTurn][lastInPlay].val);
+    $("#p" + playerId + "card" + player.onCell[game.whosTurn]).attr("class", "card fill");
     mainDeck.splice(y, 1);
     eventListeners();
+    if (game.whosTurn == 0){
+      $("#heading").text("Player 1's turn");
+    } else {
+      $("#heading").text("Player 2's turn");
+    };
     player.cardScore();
   },
   checkWin: function(){
+    var x = game.whosTurn;
+    if ((player.scoreArray[0][0] == player.scoreArray[1][0])){
+      game.clearRound();
+      return;
+    }
+    if ((player.onCell[x] == 9) && (player.scoreArray[x][0] < 21)){
+      game.wins[x][0] += 1;
+      $("#p1rS").text("Rounds Won: " + game.wins[0][0]);
+      $("#p2rS").text("Rounds Won: " + game.wins[1][0]);
+      game.clearRound();
+      return;
+    }
     if ((player.scoreArray[0][0] == 20) && (player.scoreArray[1][0] == 20)){
       game.clearRound();
       return;
     }
     if (((player.scoreArray[0][0] > player.scoreArray[1][0]) && !(player.scoreArray[0][0] > 20)) || (!(player.scoreArray[0][0] > 20) && (player.scoreArray[1][0] > 20))){
       game.wins[0][0] += 1;
-      $("#p1rS").text("Rounds won: " + game.wins[0][0]);
+      $("#p1rS").text("Rounds Won: " + game.wins[0][0]);
       game.clearRound();
     } else if (((player.scoreArray[1][0] > player.scoreArray[0][0]) && !(player.scoreArray[1][0] > 20)) || (!(player.scoreArray[1][0] > 20) && (player.scoreArray[0][0] > 20))){
       game.wins[1][0] += 1;
-      $("#p2rS").text("Rounds won: " + game.wins[1][0]);
+      $("#p2rS").text("Rounds Won: " + game.wins[1][0]);
       game.clearRound();
     }
   },
@@ -288,6 +331,11 @@ var game = {
   },
   gameOver: function(){
     if ((game.wins[0][0] == 3) || (game.wins[1][0] == 3)){
+      if (game.wins[0][0] > game.wins[1][0]){
+        $("#heading").text("Player 1 Wins!");
+      } else{
+        $("#heading").text("Player 2 Wins!");
+      }
       return;
     }
     if ((game.wins[0][0] < 3) && (game.wins[1][0] < 3)){
